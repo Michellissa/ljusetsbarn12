@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ShoppingBag } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useAuth } from '../../contexts/AuthContext'
 import { Button } from '../../components/ui/Button'
@@ -45,9 +44,7 @@ export function AdminLoginPage() {
         className="w-full max-w-md"
       >
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-900/30 mb-4">
-            <ShoppingBag className="w-8 h-8 text-amber-600" />
-          </div>
+          <img src="/logo.png" alt="Ljusets Barn" className="w-20 h-20 object-contain mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Admin</h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">Logga in för att administrera butiken</p>
         </div>

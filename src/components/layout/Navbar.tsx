@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ShoppingBag, Heart, Moon, Sun, Search } from 'lucide-react'
+import { Menu, X, Heart, Moon, Sun, Search } from 'lucide-react'
 import { NAV_ITEMS, SITE_NAME } from '../../lib/constants'
 import { useTheme } from '../../contexts/ThemeContext'
 import { useFavorites } from '../../contexts/FavoritesContext'
@@ -38,8 +38,8 @@ export function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          <Link to="/" className="flex items-center gap-2">
-            <ShoppingBag className="w-6 h-6 text-amber-600" />
+          <Link to="/" className="flex items-center gap-3">
+            <img src="/logo.png" alt="Ljusets Barn" className="h-10 w-10 object-contain" />
             <span className="text-xl font-semibold text-gray-900 dark:text-white">{SITE_NAME}</span>
           </Link>
 

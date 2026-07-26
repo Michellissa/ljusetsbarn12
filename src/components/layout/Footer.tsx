@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ShoppingBag, Mail, Phone, MapPin, Camera, Globe } from 'lucide-react'
+import { Mail, Phone, MapPin, Camera, Globe } from 'lucide-react'
 import { SITE_NAME, CONTACT, SOCIAL, NAV_ITEMS } from '../../lib/constants'
 
 export function Footer() {
@@ -8,8 +8,8 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           <div>
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <ShoppingBag className="w-6 h-6 text-amber-600" />
+            <Link to="/" className="flex items-center gap-3 mb-4">
+              <img src="/logo.png" alt="Ljusets Barn" className="h-10 w-10 object-contain" />
               <span className="text-lg font-semibold text-gray-900 dark:text-white">{SITE_NAME}</span>
             </Link>
             <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
