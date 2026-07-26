@@ -28,10 +28,11 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       >
         <div className="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700">
           <img
-            src={product.image_url}
+            src={product.image_url || '/placeholder.svg'}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
+            onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.svg' }}
           />
           <button
             onClick={(e) => {

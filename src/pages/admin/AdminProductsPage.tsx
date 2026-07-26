@@ -130,7 +130,8 @@ export function AdminProductsPage() {
                 >
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <img src={product.image_url} alt={product.name} className="w-10 h-10 rounded-lg object-cover" />
+                      <img src={product.image_url || '/placeholder.svg'} alt={product.name} className="w-10 h-10 rounded-lg object-cover" 
+onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.svg' }} />
                       <div>
                         <p className="text-sm font-medium text-gray-900 dark:text-white">{product.name}</p>
                         <p className="text-xs text-gray-500">{product.description.slice(0, 50)}...</p>

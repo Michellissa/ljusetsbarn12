@@ -37,7 +37,7 @@ export function ProductDetailPage() {
 
   if (!product) return <NotFoundPage />
 
-  const images = product.images?.length ? product.images : [product.image_url]
+  const images = product.images?.length ? product.images.filter(Boolean) : ([product.image_url].filter(Boolean) as string[])
   const inStock = product.stock > 0
   const favorited = isFavorite(product.id)
 
@@ -57,7 +57,7 @@ export function ProductDetailPage() {
         >
           <div className="rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 mb-4">
             <ImageZoom
-              src={images[selectedImage]}
+              src={images[selectedImage] || '/placeholder.svg'}
               alt={product.name}
               className="aspect-square"
             />

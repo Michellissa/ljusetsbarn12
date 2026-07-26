@@ -90,7 +90,7 @@ export function SearchBar({ onClose }: SearchBarProps) {
                   className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
                 >
                   <img
-                    src={product.image_url}
+                    src={product.image_url || '/placeholder.svg'}
                     alt={product.name}
                     className="w-10 h-10 rounded-lg object-cover"
                   />

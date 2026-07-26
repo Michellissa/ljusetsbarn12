@@ -28,8 +28,9 @@ export function ImageZoom({ src, alt, className = '' }: ImageZoomProps) {
       onMouseMove={handleMouseMove}
     >
       <img
-        src={src}
+        src={src || '/placeholder.svg'}
         alt={alt}
+        onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.svg' }}
         className="w-full h-full object-cover transition-transform duration-200"
         style={{
           transform: zoom ? 'scale(2)' : 'scale(1)',

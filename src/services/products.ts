@@ -1,6 +1,8 @@
 import { supabase } from '../lib/supabase'
 import type { Product } from '../types'
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
 export async function getProducts(options?: {
   categoryId?: string
   limit?: number
@@ -9,12 +11,23 @@ export async function getProducts(options?: {
   page?: number
   pageSize?: number
 }): Promise<{ products: Product[]; count: number }> {
+  let categoryUuid = options?.categoryId
+
+  if (categoryUuid && !UUID_REGEX.test(categoryUuid)) {
+    const { data } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('slug', categoryUuid)
+      .single()
+    categoryUuid = (data as { id: string } | null)?.id
+  }
+
   let query = supabase
     .from('products')
     .select('*, category:categories(*)', { count: 'exact' })
 
-  if (options?.categoryId) {
-    query = query.eq('category_id', options.categoryId)
+  if (categoryUuid) {
+    query = query.eq('category_id', categoryUuid)
   }
 
   if (options?.featured !== undefined) {
