@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ChevronLeft, Heart, Package } from 'lucide-react'
+import { ChevronLeft, Heart, ShoppingCart } from 'lucide-react'
 import { useProduct, useRelatedProducts } from '../hooks/useProducts'
 import { ImageZoom } from '../components/ui/ImageZoom'
 import { Badge } from '../components/ui/Badge'
@@ -10,6 +10,8 @@ import { ProductCarousel } from '../components/products/ProductCarousel'
 import { Skeleton } from '../components/ui/LoadingSkeleton'
 import { NotFoundPage } from '../components/ui/ErrorPage'
 import { useFavorites } from '../contexts/FavoritesContext'
+import { useCart } from '../contexts/CartContext'
+import toast from 'react-hot-toast'
 import { cn } from '../utils/cn'
 
 export function ProductDetailPage() {
@@ -17,6 +19,7 @@ export function ProductDetailPage() {
   const { data: product, isLoading } = useProduct(id)
   const { data: related } = useRelatedProducts(product?.category_id, id ?? '')
   const { isFavorite, toggleFavorite } = useFavorites()
+  const { addItem } = useCart()
   const [selectedImage, setSelectedImage] = useState(0)
 
   if (isLoading) {
@@ -37,7 +40,7 @@ export function ProductDetailPage() {
 
   if (!product) return <NotFoundPage />
 
-  const images = product.images?.length ? product.images.filter(Boolean) : ([product.image_url].filter(Boolean) as string[])
+  const images = product.image_urls?.length ? product.image_urls.filter(Boolean) : ([product.image_url].filter(Boolean) as string[])
   const inStock = product.stock > 0
   const favorited = isFavorite(product.id)
 
@@ -121,8 +124,9 @@ export function ProductDetailPage() {
               variant={inStock ? 'primary' : 'outline'}
               size="lg"
               disabled={!inStock}
+              onClick={() => { addItem(product); toast.success(`${product.name} tillagd i varukorgen`) }}
             >
-              <Package className="w-5 h-5" />
+              <ShoppingCart className="w-5 h-5" />
               {inStock ? 'Lägg i varukorg' : 'Tillfälligt slut'}
             </Button>
             <Button

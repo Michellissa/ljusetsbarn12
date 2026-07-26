@@ -11,13 +11,78 @@ export interface Product {
   description: string
   price: number
   image_url: string
-  images?: string[]
+  image_urls: string[]
   stock: number
   featured: boolean
   category_id: string
   created_at: string
   updated_at: string
   category?: Category
+}
+
+export interface CartItem {
+  product: Product
+  quantity: number
+}
+
+export interface OrderFormData {
+  customer_name: string
+  phone: string
+  email: string
+  address: string
+  city: string
+  postal_code: string
+  message?: string
+}
+
+export interface Order {
+  id: string
+  customer_name: string
+  phone: string
+  email: string
+  address: string
+  city: string
+  postal_code: string
+  message: string
+  status: string
+  total: number
+  swish_number: string | null
+  created_at: string
+  items?: OrderItem[]
+}
+
+export interface OrderItem {
+  id: string
+  order_id: string
+  product_id: string
+  quantity: number
+  price: number
+  product?: Product
+}
+
+export type OrderStatus = 'ny' | 'vantar_betalning' | 'betald' | 'packas' | 'skickad' | 'klar'
+
+export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
+  ny: 'Ny',
+  vantar_betalning: 'Väntar på betalning',
+  betald: 'Betald',
+  packas: 'Packas',
+  skickad: 'Skickad',
+  klar: 'Klar',
+}
+
+export const ORDER_STATUS_COLORS: Record<OrderStatus, string> = {
+  ny: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+  vantar_betalning: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+  betald: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+  packas: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
+  skickad: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400',
+  klar: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+}
+
+export interface PaymentService {
+  name: string
+  processPayment(orderId: string, total: number): Promise<{ success: boolean; redirectUrl?: string }>
 }
 
 export interface ProductFormData {
@@ -27,7 +92,7 @@ export interface ProductFormData {
   stock: number
   featured: boolean
   category_id: string
-  images: string[]
+  image_urls: string[]
 }
 
 export interface CategoryFormData {
@@ -54,6 +119,9 @@ export interface Message {
 export interface AdminStats {
   totalProducts: number
   totalCategories: number
+  totalOrders: number
+  totalRevenue: number
   lowStockProducts: Product[]
   recentProducts: Product[]
+  recentOrders: Order[]
 }

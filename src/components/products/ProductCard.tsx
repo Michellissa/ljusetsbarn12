@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Heart, ShoppingBag } from 'lucide-react'
+import { Heart, ShoppingCart } from 'lucide-react'
+import toast from 'react-hot-toast'
 import type { Product } from '../../types'
 import { useFavorites } from '../../contexts/FavoritesContext'
+import { useCart } from '../../contexts/CartContext'
 import { Badge } from '../ui/Badge'
 import { cn } from '../../utils/cn'
 
@@ -13,6 +15,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const { isFavorite, toggleFavorite } = useFavorites()
+  const { addItem } = useCart()
   const favorited = isFavorite(product.id)
   const inStock = product.stock > 0
 
@@ -75,12 +78,17 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             <span className="text-lg font-bold text-amber-600">
               {product.price} kr
             </span>
-            {inStock && (
-              <span className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400">
-                <ShoppingBag className="w-3 h-3" />
-                I lager
-              </span>
-            )}
+            <div className="flex items-center gap-1">
+              {inStock && (
+                <button
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); addItem(product); toast.success(`${product.name} tillagd i varukorgen`) }}
+                  className="p-1.5 rounded-lg bg-amber-600 text-white hover:bg-amber-700 transition-colors"
+                  aria-label="Lägg i varukorg"
+                >
+                  <ShoppingCart className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </Link>
