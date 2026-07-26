@@ -1,0 +1,91 @@
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { ShoppingBag } from 'lucide-react'
+import toast from 'react-hot-toast'
+import { useAuth } from '../../contexts/AuthContext'
+import { Button } from '../../components/ui/Button'
+
+const loginSchema = z.object({
+  email: z.string().email('Ogiltig e-postadress'),
+  password: z.string().min(6, 'Lösenordet måste vara minst 6 tecken'),
+})
+
+type LoginForm = z.infer<typeof loginSchema>
+
+export function AdminLoginPage() {
+  const navigate = useNavigate()
+  const { signIn } = useAuth()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
+  })
+
+  const onSubmit = async (data: LoginForm) => {
+    const { error } = await signIn(data.email, data.password)
+    if (error) {
+      toast.error(error)
+    } else {
+      toast.success('Inloggad!')
+      navigate('/admin')
+    }
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md"
+      >
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-900/30 mb-4">
+            <ShoppingBag className="w-8 h-8 text-amber-600" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Admin</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Logga in för att administrera butiken</p>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                E-post
+              </label>
+              <input
+                id="email"
+                type="email"
+                {...register('email')}
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+              {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>}
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Lösenord
+              </label>
+              <input
+                id="password"
+                type="password"
+                {...register('password')}
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+              {errors.password && <p className="text-sm text-red-600 mt-1">{errors.password.message}</p>}
+            </div>
+
+            <Button type="submit" loading={isSubmitting} className="w-full">
+              Logga in
+            </Button>
+          </form>
+        </div>
+      </motion.div>
+    </div>
+  )
+}
