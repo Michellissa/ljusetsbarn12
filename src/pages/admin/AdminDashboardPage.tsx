@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 export function AdminDashboardPage() {
   const { data: products, isLoading: productsLoading } = useQuery({
-    queryKey: ['admin-products'],
+    queryKey: ['admin-dashboard-products'],
     queryFn: async () => {
       const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false })
       return (data as Product[]) ?? []
@@ -16,7 +16,7 @@ export function AdminDashboardPage() {
   })
 
   const { data: categories } = useQuery({
-    queryKey: ['admin-categories'],
+    queryKey: ['admin-dashboard-categories'],
     queryFn: async () => {
       const { data } = await supabase.from('categories').select('*')
       return (data as Category[]) ?? []

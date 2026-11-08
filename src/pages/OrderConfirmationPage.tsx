@@ -1,24 +1,19 @@
 import { useParams, Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { CheckCircle, Package, ArrowRight } from 'lucide-react'
-import { getOrder, getOrderItems } from '../services/orders'
+import { CheckCircle, Package, ArrowRight, Truck } from 'lucide-react'
+import { getOrderByToken } from '../services/orders'
+import { ORDER_STATUS_LABELS, type OrderStatus } from '../types'
 import { Button } from '../components/ui/Button'
 import { Skeleton } from '../components/ui/LoadingSkeleton'
 
 export function OrderConfirmationPage() {
-  const { id } = useParams<{ id: string }>()
+  const { token } = useParams<{ token: string }>()
 
   const { data: order, isLoading } = useQuery({
-    queryKey: ['order', id],
-    queryFn: () => getOrder(id!),
-    enabled: !!id,
-  })
-
-  const { data: items } = useQuery({
-    queryKey: ['order-items', id],
-    queryFn: () => getOrderItems(id!),
-    enabled: !!id,
+    queryKey: ['order-by-token', token],
+    queryFn: () => getOrderByToken(token!),
+    enabled: !!token,
   })
 
   if (isLoading) {
@@ -40,6 +35,8 @@ export function OrderConfirmationPage() {
     )
   }
 
+  const statusLabel = ORDER_STATUS_LABELS[order.status as OrderStatus] ?? order.status
+
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <motion.div
@@ -50,10 +47,13 @@ export function OrderConfirmationPage() {
         <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Tack för din beställning!</h1>
         <p className="text-gray-600 dark:text-gray-400">
-          Ordernummer: <strong className="text-amber-600">{order.id.slice(0, 8).toUpperCase()}</strong>
+          Ordernummer: <strong className="text-amber-600">{order.order_number}</strong>
         </p>
         <p className="text-sm text-gray-500 mt-1">
-          Vi behandlar din beställning inom kort. Du får en bekräftelse via e-post.
+          Status: {statusLabel}
+        </p>
+        <p className="text-sm text-gray-500 mt-1">
+          Spara denna sida som din orderbekräftelse. Vi kontaktar dig om något är oklart.
         </p>
       </motion.div>
 
@@ -90,10 +90,10 @@ export function OrderConfirmationPage() {
         <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
           <h3 className="font-medium text-gray-900 dark:text-white mb-3">Produkter</h3>
           <div className="space-y-2">
-            {items?.map((item) => (
+            {order.items?.map((item) => (
               <div key={item.id} className="flex justify-between text-sm">
                 <span className="text-gray-600 dark:text-gray-400">
-                  {item.product?.name ?? 'Produkt'} x{item.quantity}
+                  {item.product_name ?? 'Produkt'} x{item.quantity}
                 </span>
                 <span className="text-gray-900 dark:text-white font-medium">{item.price * item.quantity} kr</span>
               </div>
@@ -109,7 +109,25 @@ export function OrderConfirmationPage() {
           <p className="text-sm text-gray-700 dark:text-gray-300">
             <strong>Betalningsstatus:</strong> Din betalning kontrolleras av oss. Vi markerar ordern som betald när vi bekräftat Swish-betalningen.
           </p>
+          {order.swish_number && (
+            <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+              Swisha <strong>{order.total} kr</strong> till <strong>{order.swish_number}</strong> och ange ordernummer <strong>{order.order_number}</strong> som meddelande.
+            </p>
+          )}
         </div>
+
+        {order.tracking_number && (
+          <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg flex items-start gap-3">
+            <Truck className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-medium text-gray-900 dark:text-white">Din order är skickad</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Spårningsnummer: {order.tracking_number}
+                {order.carrier ? ` (${order.carrier})` : ''}
+              </p>
+            </div>
+          </div>
+        )}
       </motion.div>
 
       <div className="text-center mt-8">

@@ -41,6 +41,7 @@ export function AdminProductsPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] })
+      queryClient.invalidateQueries({ queryKey: ['products'] })
       toast.success('Produkt skapad!')
       setFormOpen(false)
     },
@@ -51,6 +52,7 @@ export function AdminProductsPage() {
     mutationFn: async ({ id, product }: { id: string; product: Partial<Product> }) => updateProduct(id, product),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] })
+      queryClient.invalidateQueries({ queryKey: ['products'] })
       toast.success('Produkt uppdaterad!')
       setEditing(null)
       setFormOpen(false)
@@ -62,6 +64,7 @@ export function AdminProductsPage() {
     mutationFn: deleteProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] })
+      queryClient.invalidateQueries({ queryKey: ['products'] })
       toast.success('Produkt borttagen!')
       setDeleting(null)
     },
@@ -70,14 +73,18 @@ export function AdminProductsPage() {
 
   const handleSave = async (data: Partial<Product> & { imageFile?: File }) => {
     const { imageFile, ...productData } = data
-    if (editing) {
-      const updateData: Partial<Product> = { ...productData }
-      if (imageFile) {
-        updateData.image_url = await uploadProductImage(imageFile)
+    try {
+      if (editing) {
+        const updateData: Partial<Product> = { ...productData }
+        if (imageFile) {
+          updateData.image_url = await uploadProductImage(imageFile)
+        }
+        updateMutation.mutate({ id: editing.id, product: updateData })
+      } else {
+        createMutation.mutate({ product: productData as Parameters<typeof createProduct>[0], imageFile })
       }
-      updateMutation.mutate({ id: editing.id, product: updateData })
-    } else {
-      createMutation.mutate({ product: productData as Parameters<typeof createProduct>[0], imageFile })
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Kunde inte ladda upp bilden')
     }
   }
 

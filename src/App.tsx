@@ -24,6 +24,7 @@ import { AdminProductsPage } from './pages/admin/AdminProductsPage'
 import { AdminCategoriesPage } from './pages/admin/AdminCategoriesPage'
 import { AdminOrdersPage } from './pages/admin/AdminOrdersPage'
 import { AdminMessagesPage } from './pages/admin/AdminMessagesPage'
+import { AdminSettingsPage } from './pages/admin/AdminSettingsPage'
 import { HelmetProvider } from './components/ui/HelmetProvider'
 import { ProtectedRoute } from './components/ui/ProtectedRoute'
 
@@ -56,7 +57,7 @@ export default function App() {
                     <Route path="/favoriter" element={<FavoritesPage />} />
                     <Route path="/varukorg" element={<CartPage />} />
                     <Route path="/kassa" element={<CheckoutPage />} />
-                    <Route path="/orderbekraftelse/:id" element={<OrderConfirmationPage />} />
+                    <Route path="/orderbekraftelse/:token" element={<OrderConfirmationPage />} />
                   </Route>
 
                   <Route path="/admin/login" element={<AdminLoginPage />} />
@@ -73,6 +74,7 @@ export default function App() {
                     <Route path="kategorier" element={<AdminCategoriesPage />} />
                     <Route path="bestallningar" element={<AdminOrdersPage />} />
                     <Route path="meddelanden" element={<AdminMessagesPage />} />
+                    <Route path="installningar" element={<AdminSettingsPage />} />
                   </Route>
 
                   <Route path="*" element={<MainLayout />}>

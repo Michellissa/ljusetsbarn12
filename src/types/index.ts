@@ -37,6 +37,8 @@ export interface OrderFormData {
 
 export interface Order {
   id: string
+  order_number: string
+  access_token: string
   customer_name: string
   phone: string
   email: string
@@ -47,6 +49,10 @@ export interface Order {
   status: string
   total: number
   swish_number: string | null
+  tracking_number: string | null
+  carrier: string | null
+  shipped_at: string | null
+  paid_at: string | null
   created_at: string
   items?: OrderItem[]
 }
@@ -54,10 +60,23 @@ export interface Order {
 export interface OrderItem {
   id: string
   order_id: string
-  product_id: string
+  product_id: string | null
+  product_name: string | null
   quantity: number
   price: number
   product?: Product
+}
+
+export interface CreateOrderItemInput {
+  product_id: string
+  quantity: number
+}
+
+export interface CreateOrderResult {
+  id: string
+  order_number: string
+  access_token: string
+  total: number
 }
 
 export type OrderStatus = 'ny' | 'vantar_betalning' | 'betald' | 'packas' | 'skickad' | 'klar'

@@ -1,12 +1,76 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Package, ChevronDown, ChevronUp } from 'lucide-react'
+import { Package, ChevronDown, ChevronUp, Truck } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { getOrders, getOrderItems, updateOrderStatus } from '../../services/orders'
-import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, type OrderStatus } from '../../types'
+import { getOrders, getOrderItems, updateOrderStatus, markOrderShipped } from '../../services/orders'
+import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, type Order, type OrderStatus } from '../../types'
 
 const statuses: OrderStatus[] = ['ny', 'vantar_betalning', 'betald', 'packas', 'skickad', 'klar']
+
+function OrderItems({ orderId }: { orderId: string }) {
+  const { data: items } = useQuery({
+    queryKey: ['admin-order-items', orderId],
+    queryFn: () => getOrderItems(orderId),
+  })
+
+  return (
+    <div className="space-y-2 mt-3">
+      {items?.map((item) => (
+        <div key={item.id} className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+          <span>{item.product_name ?? item.product?.name ?? 'Produkt'} x{item.quantity}</span>
+          <span>{item.price * item.quantity} kr</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function ShippingControls({
+  order,
+  onShipped,
+  saving,
+}: {
+  order: Order
+  onShipped: (id: string, tracking: string, carrier: string) => void
+  saving: boolean
+}) {
+  const [tracking, setTracking] = useState(order.tracking_number ?? '')
+  const [carrier, setCarrier] = useState(order.carrier ?? 'PostNord')
+
+  return (
+    <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 items-end">
+      <div>
+        <label className="block text-xs text-gray-500 uppercase tracking-wider mb-1">Spårningsnummer</label>
+        <input
+          value={tracking}
+          onChange={(e) => setTracking(e.target.value)}
+          className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+        />
+      </div>
+      <div>
+        <label className="block text-xs text-gray-500 uppercase tracking-wider mb-1">Transportör</label>
+        <select
+          value={carrier}
+          onChange={(e) => setCarrier(e.target.value)}
+          className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+        >
+          <option>PostNord</option>
+          <option>DB Schenker</option>
+          <option>Bring</option>
+          <option>Annat</option>
+        </select>
+      </div>
+      <button
+        onClick={() => onShipped(order.id, tracking, carrier)}
+        disabled={saving || !tracking.trim()}
+        className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-amber-600 text-white text-sm font-medium hover:bg-amber-700 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+      >
+        <Truck className="w-4 h-4" /> Markera skickad
+      </button>
+    </div>
+  )
+}
 
 export function AdminOrdersPage() {
   const [expanded, setExpanded] = useState<string | null>(null)
@@ -26,23 +90,15 @@ export function AdminOrdersPage() {
     onError: (err: Error) => toast.error(err.message),
   })
 
-  const OrderItems = ({ orderId }: { orderId: string }) => {
-    const { data: items } = useQuery({
-      queryKey: ['admin-order-items', orderId],
-      queryFn: () => getOrderItems(orderId),
-    })
-
-    return (
-      <div className="space-y-2 mt-3">
-        {items?.map((item) => (
-          <div key={item.id} className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
-            <span>{item.product?.name ?? 'Produkt'} x{item.quantity}</span>
-            <span>{item.price * item.quantity} kr</span>
-          </div>
-        ))}
-      </div>
-    )
-  }
+  const shipMutation = useMutation({
+    mutationFn: ({ id, tracking, carrier }: { id: string; tracking: string; carrier: string }) =>
+      markOrderShipped(id, tracking, carrier),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-orders'] })
+      toast.success('Order markerad som skickad')
+    },
+    onError: (err: Error) => toast.error(err.message),
+  })
 
   return (
     <div>
@@ -71,7 +127,7 @@ export function AdminOrdersPage() {
                   <div className="flex items-center gap-3 mb-1">
                     <Package className="w-4 h-4 text-amber-600 flex-shrink-0" />
                     <span className="font-semibold text-gray-900 dark:text-white">
-                      #{order.id.slice(0, 8).toUpperCase()}
+                      #{order.order_number}
                     </span>
                     <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${ORDER_STATUS_COLORS[order.status as OrderStatus] || ORDER_STATUS_COLORS.ny}`}>
                       {ORDER_STATUS_LABELS[order.status as OrderStatus] || order.status}
@@ -119,6 +175,11 @@ export function AdminOrdersPage() {
                           <option key={s} value={s}>{ORDER_STATUS_LABELS[s]}</option>
                         ))}
                       </select>
+                      {order.paid_at && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Betald {new Date(order.paid_at).toLocaleDateString('sv-SE')}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -138,6 +199,23 @@ export function AdminOrdersPage() {
                       <span>Totalt</span>
                       <span className="text-amber-600">{order.total} kr</span>
                     </div>
+                  </div>
+
+                  <div className="mt-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Leverans</p>
+                    <ShippingControls
+                      order={order}
+                      saving={shipMutation.isPending}
+                      onShipped={(id, tracking, carrier) =>
+                        shipMutation.mutate({ id, tracking, carrier })
+                      }
+                    />
+                    {order.tracking_number && (
+                      <p className="text-sm text-gray-500 mt-2">
+                        Nuvarande spårning: {order.tracking_number}
+                        {order.carrier ? ` (${order.carrier})` : ''}
+                      </p>
+                    )}
                   </div>
                 </div>
               )}

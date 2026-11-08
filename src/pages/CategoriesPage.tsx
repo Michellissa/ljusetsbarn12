@@ -6,11 +6,14 @@ import { Skeleton } from '../components/ui/LoadingSkeleton'
 import { ErrorPage } from '../components/ui/ErrorPage'
 
 const categoryImages: Record<string, string> = {
-  smycken: 'https://images.unsplash.com/photo-1601121140229-5e7a94f9ec9a?w=600&q=80',
-  presenter: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=600&q=80',
-  inredning: 'https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80',
-  dekoration: 'https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=600&q=80',
-  ljus: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&q=80',
+  smycken: '/images/ljusetsbarn/image6.jpg',
+  presenter: '/images/ljusetsbarn/image12.jpg',
+  inredning: '/images/ljusetsbarn/image22.jpg',
+  dekoration: '/images/ljusetsbarn/image10.jpg',
+  ljus: '/images/ljusetsbarn/image9.jpg',
+  dophanddukar: '/images/ljusetsbarn/image18.jpg',
+  plexi: '/images/ljusetsbarn/image1.jpg',
+  hantverk: '/images/ljusetsbarn/image25.jpg',
 }
 
 export function CategoriesPage() {

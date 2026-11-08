@@ -7,11 +7,11 @@ import { z } from 'zod'
 import { ShoppingBag, CreditCard, Check } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useCart } from '../contexts/CartContext'
-import { createOrder } from '../services/orders'
+import { createOrder, sendOrderEmail, updateOrderDetails } from '../services/orders'
 import { getSetting } from '../services/settings'
 import { Button } from '../components/ui/Button'
 import { useQuery } from '@tanstack/react-query'
-import type { OrderFormData } from '../types'
+import type { OrderFormData, CreateOrderResult } from '../types'
 
 const checkoutSchema = z.object({
   customer_name: z.string().min(1, 'Namn krävs'),
@@ -26,9 +26,9 @@ const checkoutSchema = z.object({
 export function CheckoutPage() {
   const navigate = useNavigate()
   const { items, total, clearCart } = useCart()
-  const [step, setStep] = useState<'form' | 'payment' | 'confirming'>('form')
-  const [formData, setFormData] = useState<OrderFormData | null>(null)
-  const [submitting, setSubmitting] = useState(false)
+  const [step, setStep] = useState<'form' | 'payment'>('form')
+  const [createdOrder, setCreatedOrder] = useState<CreateOrderResult | null>(null)
+  const [creating, setCreating] = useState(false)
 
   const { data: swishNumber } = useQuery({
     queryKey: ['settings', 'swish_number'],
@@ -43,42 +43,47 @@ export function CheckoutPage() {
     resolver: zodResolver(checkoutSchema),
   })
 
+  const orderTotal = createdOrder?.total ?? total
+
   const qrCodeUrl = useMemo(() => {
-    if (!swishNumber || total <= 0) return ''
-    return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=Swish%3A${swishNumber}%3B${total.toFixed(0)}`
-  }, [swishNumber, total])
+    if (!swishNumber || orderTotal <= 0 || !createdOrder) return ''
+    const message = encodeURIComponent(createdOrder.order_number)
+    return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=Swish%3A${swishNumber}%3B${orderTotal}%3B${message}`
+  }, [swishNumber, orderTotal, createdOrder])
 
   if (items.length === 0 && step === 'form') {
     navigate('/varukorg')
     return null
   }
 
-  const onFormSubmit = (data: OrderFormData) => {
-    setFormData(data)
-    setStep('payment')
+  const onFormSubmit = async (data: OrderFormData) => {
+    setCreating(true)
+    try {
+      if (createdOrder) {
+        await updateOrderDetails(createdOrder.access_token, data)
+      } else {
+        const order = await createOrder(
+          data,
+          items.map((i) => ({
+            product_id: i.product.id,
+            quantity: i.quantity,
+          }))
+        )
+        setCreatedOrder(order)
+        void sendOrderEmail(order.access_token).catch(() => {})
+      }
+      setStep('payment')
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Kunde inte skapa beställningen. Försök igen.')
+    } finally {
+      setCreating(false)
+    }
   }
 
-  const handleConfirmPayment = async () => {
-    if (!formData) return
-    setSubmitting(true)
-    try {
-      const order = await createOrder(
-        formData,
-        items.map((i) => ({
-          product_id: i.product.id,
-          quantity: i.quantity,
-          price: i.product.price,
-        })),
-        total,
-        swishNumber ?? undefined
-      )
-      clearCart()
-      navigate(`/orderbekraftelse/${order.id}`)
-    } catch (err) {
-      toast.error('Kunde inte skapa beställningen. Försök igen.')
-    } finally {
-      setSubmitting(false)
-    }
+  const handleConfirmPayment = () => {
+    if (!createdOrder) return
+    clearCart()
+    navigate(`/orderbekraftelse/${createdOrder.access_token}`)
   }
 
   return (
@@ -136,7 +141,7 @@ export function CheckoutPage() {
                       <textarea rows={3} {...register('message')} className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none" />
                     </div>
                   </div>
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" loading={creating} className="w-full">
                     Gå till betalning
                   </Button>
                 </form>
@@ -156,11 +161,17 @@ export function CheckoutPage() {
                 </div>
 
                 <div className="text-center mb-6">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                    Ordernummer
+                  </p>
+                  <p className="text-lg font-semibold text-amber-600 mb-4">
+                    {createdOrder?.order_number}
+                  </p>
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                    Swisha <strong className="text-amber-600">{total} kr</strong> till
+                    Swisha <strong className="text-amber-600">{orderTotal} kr</strong> till
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                    {swishNumber ?? '0701234567'}
+                    {swishNumber ?? 'Ej konfigurerat'}
                   </p>
                   {qrCodeUrl && (
                     <img
@@ -175,8 +186,8 @@ export function CheckoutPage() {
                   <h3 className="font-medium text-gray-900 dark:text-white mb-2">Så här betalar du:</h3>
                   <ol className="text-sm text-gray-600 dark:text-gray-400 space-y-2 list-decimal list-inside">
                     <li>Öppna Swish-appen</li>
-                    <li>Betala <strong>{total} kr</strong> till <strong>{swishNumber ?? '0701234567'}</strong></li>
-                    <li>Ange ordernumret i meddelandet (visas efter betalning)</li>
+                    <li>Betala <strong>{orderTotal} kr</strong> till <strong>{swishNumber ?? 'Ej konfigurerat'}</strong></li>
+                    <li>Ange <strong>{createdOrder?.order_number}</strong> som meddelande</li>
                     <li>Klicka på "Jag har betalat" nedan</li>
                   </ol>
                 </div>
@@ -187,7 +198,6 @@ export function CheckoutPage() {
                   </Button>
                   <Button
                     onClick={handleConfirmPayment}
-                    loading={submitting}
                     className="flex-1"
                   >
                     <Check className="w-4 h-4" /> Jag har betalat
@@ -216,9 +226,12 @@ export function CheckoutPage() {
             <div className="border-t border-gray-200 dark:border-gray-700 mt-4 pt-4">
               <div className="flex justify-between text-lg font-bold text-gray-900 dark:text-white">
                 <span>Totalt</span>
-                <span>{total} kr</span>
+                <span>{orderTotal} kr</span>
               </div>
               <p className="text-xs text-gray-500 mt-1">inkl. moms</p>
+              <p className="text-xs text-gray-500 mt-3">
+                Vi fraktar inom Sverige och EU. Vi ansvarar inte för hur Posten hanterar leveransen.
+              </p>
             </div>
           </div>
         </div>

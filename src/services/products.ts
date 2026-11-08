@@ -39,7 +39,7 @@ export async function getProducts(options?: {
   }
 
   const page = options?.page ?? 1
-  const pageSize = options?.pageSize ?? 12
+  const pageSize = options?.limit ?? options?.pageSize ?? 12
   const from = (page - 1) * pageSize
   const to = from + pageSize - 1
 

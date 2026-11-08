@@ -10,6 +10,8 @@ import {
   Menu,
   X,
   ChevronLeft,
+  ClipboardList,
+  Settings,
 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { cn } from '../utils/cn'
@@ -18,7 +20,9 @@ const adminNav = [
   { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
   { label: 'Produkter', path: '/admin/produkter', icon: Package },
   { label: 'Kategorier', path: '/admin/kategorier', icon: Tags },
+  { label: 'Beställningar', path: '/admin/bestallningar', icon: ClipboardList },
   { label: 'Meddelanden', path: '/admin/meddelanden', icon: Mail },
+  { label: 'Inställningar', path: '/admin/installningar', icon: Settings },
 ]
 
 export function AdminLayout() {

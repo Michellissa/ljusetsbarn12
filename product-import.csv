@@ -1,0 +1,23 @@
+image_file,name,description,price,stock,category_slug,featured
+image18.jpg,Dophandduk – Vit med kors,"Broderad dophandduk i mjuk bomull. En personlig och tidlös dopgåva.",299,8,dophanddukar,true
+image19.jpg,Dophandduk – Elfenben,"Handbroderad dophandduk i varm elfenbensvit ton. Passar till dop och högtider.",299,6,dophanddukar,false
+image20.jpg,Dophandduk – Broderad blomma,"Dophandduk med broderad blomma. Ett uppskattat minne från dopdagen.",349,5,dophanddukar,false
+image21.jpg,Dophandduk – Personlig,"Personlig dophandduk med namn och datum. Broderas på beställning.",399,10,dophanddukar,true
+image14.jpg,Dophandduk – Klassisk,"Klassisk broderad dophandduk i tidlös design. Mjuk och hållbar bomull.",279,7,dophanddukar,false
+image17.jpg,Dophandduk – Natur,"Dophandduk i naturlig ton med diskret broderi. En fin gåva till dopet.",279,9,dophanddukar,false
+image1.jpg,Plexi – Namnskylt,"Personlig namnskylt i plexi. Passar som dopgåva eller present.",249,12,plexi,true
+image2.jpg,Plexi – Dopskylt,"Dopskylt i plexi med plats för namn och datum. Handgjord i Sverige.",299,8,plexi,false
+image3.jpg,Plexi – Fotoram,"Fotoram i plexi som lyfter fram ditt finaste minne.",199,10,plexi,false
+image4.jpg,Plexi – Presentask,"Handgjord presentask i plexi. Fyll med en personlig gåva.",349,6,plexi,false
+image5.jpg,Plexi – Nyckelring,"Liten nyckelring i plexi. Ett personligt litet minne.",99,20,plexi,false
+image16.jpg,Plexi – Bokstöd,"Bokstöd i plexi med modern design. Handgjord och unik.",399,4,plexi,false
+image22.jpg,Plexi – Ljuslykta,"Ljuslykta i plexi som sprider ett varmt sken.",279,7,plexi,false
+image24.jpg,Plexi – Dekoration,"Dekoration i plexi för hemmet eller som personlig present.",229,9,plexi,false
+image6.jpg,Rosenkrans – Handgjord,"Handgjord rosenkrans med omsorgsfullt utvalda pärlor.",249,6,smycken,true
+image7.jpg,Armband – Pärlor,"Armband med pärlor och handgjord design. Passar till vardag och fest.",149,12,smycken,false
+image8.jpg,Halsband – Natursten,"Halsband med naturstenar och handgjord finish.",199,8,smycken,false
+image9.jpg,Handgjort ljus – Doft,"Handgjort doftljus med varm och inbjudande doft.",129,15,ljus,false
+image10.jpg,Dekoration – Trä,"Handgjord dekoration i trä. En naturlig detalj i hemmet.",179,7,dekoration,false
+image12.jpg,Presentask – Handgjord,"Handgjord presentask med personlig touch. Perfekt som gåva.",299,5,presenter,false
+image15.jpg,Smycke – Unik,"Unikt handgjort smycke. Varje exemplar är en egen liten skapelse.",179,10,smycken,false
+image25.jpg,Hantverk – Personlig gåva,"Handgjord personlig gåva med hjärta och omsorg.",249,6,hantverk,false
