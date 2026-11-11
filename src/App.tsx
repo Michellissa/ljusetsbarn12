@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
-import { ThemeProvider } from './contexts/ThemeContext'
 import { FavoritesProvider } from './contexts/FavoritesContext'
 import { CartProvider } from './contexts/CartContext'
 import { AuthProvider } from './contexts/AuthContext'
@@ -40,66 +39,64 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <FavoritesProvider>
-          <CartProvider>
-            <AuthProvider>
-              <BrowserRouter>
-                <HelmetProvider />
-                <Routes>
-                  <Route element={<MainLayout />}>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/produkter" element={<ProductsPage />} />
-                    <Route path="/produkter/:id" element={<ProductDetailPage />} />
-                    <Route path="/kategorier" element={<CategoriesPage />} />
-                    <Route path="/om-oss" element={<AboutPage />} />
-                    <Route path="/kontakt" element={<ContactPage />} />
-                    <Route path="/favoriter" element={<FavoritesPage />} />
-                    <Route path="/varukorg" element={<CartPage />} />
-                    <Route path="/kassa" element={<CheckoutPage />} />
-                    <Route path="/orderbekraftelse/:token" element={<OrderConfirmationPage />} />
-                  </Route>
+      <FavoritesProvider>
+        <CartProvider>
+          <AuthProvider>
+            <BrowserRouter>
+              <HelmetProvider />
+              <Routes>
+                <Route element={<MainLayout />}>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/produkter" element={<ProductsPage />} />
+                  <Route path="/produkter/:id" element={<ProductDetailPage />} />
+                  <Route path="/kategorier" element={<CategoriesPage />} />
+                  <Route path="/om-oss" element={<AboutPage />} />
+                  <Route path="/kontakt" element={<ContactPage />} />
+                  <Route path="/favoriter" element={<FavoritesPage />} />
+                  <Route path="/varukorg" element={<CartPage />} />
+                  <Route path="/kassa" element={<CheckoutPage />} />
+                  <Route path="/orderbekraftelse/:token" element={<OrderConfirmationPage />} />
+                </Route>
 
-                  <Route path="/admin/login" element={<AdminLoginPage />} />
-                  <Route
-                    path="/admin"
-                    element={
-                      <ProtectedRoute>
-                        <AdminLayout />
-                      </ProtectedRoute>
-                    }
-                  >
-                    <Route index element={<AdminDashboardPage />} />
-                    <Route path="produkter" element={<AdminProductsPage />} />
-                    <Route path="kategorier" element={<AdminCategoriesPage />} />
-                    <Route path="bestallningar" element={<AdminOrdersPage />} />
-                    <Route path="meddelanden" element={<AdminMessagesPage />} />
-                    <Route path="installningar" element={<AdminSettingsPage />} />
-                  </Route>
+                <Route path="/admin/login" element={<AdminLoginPage />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute>
+                      <AdminLayout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route index element={<AdminDashboardPage />} />
+                  <Route path="produkter" element={<AdminProductsPage />} />
+                  <Route path="kategorier" element={<AdminCategoriesPage />} />
+                  <Route path="bestallningar" element={<AdminOrdersPage />} />
+                  <Route path="meddelanden" element={<AdminMessagesPage />} />
+                  <Route path="installningar" element={<AdminSettingsPage />} />
+                </Route>
 
-                  <Route path="*" element={<MainLayout />}>
-                    <Route path="*" element={<NotFoundPage />} />
-                  </Route>
-                </Routes>
-              </BrowserRouter>
-              <Toaster
-                position="top-right"
-                toastOptions={{
-                  duration: 4000,
-                  style: {
-                    background: '#1f2937',
-                    color: '#f3f4f6',
-                    borderRadius: '12px',
-                  },
-                  success: {
-                    iconTheme: { primary: '#C9A227', secondary: '#fff' },
-                  },
-                }}
-              />
-            </AuthProvider>
-          </CartProvider>
-        </FavoritesProvider>
-      </ThemeProvider>
+                <Route path="*" element={<MainLayout />}>
+                  <Route path="*" element={<NotFoundPage />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                duration: 4000,
+                style: {
+                  background: '#1f2937',
+                  color: '#f3f4f6',
+                  borderRadius: '12px',
+                },
+                success: {
+                  iconTheme: { primary: '#C9A227', secondary: '#fff' },
+                },
+              }}
+            />
+          </AuthProvider>
+        </CartProvider>
+      </FavoritesProvider>
     </QueryClientProvider>
   )
 }

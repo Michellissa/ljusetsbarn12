@@ -29,18 +29,18 @@ export function AdminSettingsPage() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Inställningar</h2>
+      <h2 className="text-2xl font-bold text-gray-900  mb-6">Inställningar</h2>
 
-      <div className="max-w-xl bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+      <div className="max-w-xl bg-white  rounded-xl border border-gray-200  p-6">
         <div className="flex items-center gap-3 mb-6">
           <Settings className="w-5 h-5 text-amber-600" />
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Betalning</h3>
+          <h3 className="text-lg font-semibold text-gray-900 ">Betalning</h3>
         </div>
 
         {isLoading ? (
           <div className="space-y-3">
-            <div className="h-4 w-32 bg-gray-100 dark:bg-gray-700 rounded animate-pulse" />
-            <div className="h-10 w-full bg-gray-100 dark:bg-gray-700 rounded animate-pulse" />
+            <div className="h-4 w-32 bg-gray-100  rounded animate-pulse" />
+            <div className="h-10 w-full bg-gray-100  rounded animate-pulse" />
           </div>
         ) : (
           <form
@@ -49,14 +49,14 @@ export function AdminSettingsPage() {
               mutation.mutate(value.trim())
             }}
           >
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-700  mb-1">
               Swish-nummer
             </label>
             <input
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder="0701234567"
-              className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full px-4 py-2.5 border border-gray-300  rounded-lg bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
             <p className="text-xs text-gray-500 mt-2">
               Numret som visas i kassan och i orderbekräftelsen.

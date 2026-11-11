@@ -1,23 +1,15 @@
 export const SITE_NAME = 'Ljusets Barn'
-export const SITE_DESCRIPTION = 'Presenter, inredning och produkter som sprider glädje.'
-export const SITE_URL = 'https://ljusetsbarn.se'
+export const SITE_DESCRIPTION =
+  'Handbroderade dophanddukar, plexi och handgjorda presenter.'
+export const SITE_URL = 'https://ljusetsbarn12.vercel.app'
 
 export const CONTACT = {
-  address: 'Storgatan 12, 123 45 Stockholm',
-  phone: '+46 70 123 45 67',
-  email: 'info@ljusetsbarn.se',
-  hours: [
-    { day: 'Måndag - Fredag', time: '10:00 - 18:00' },
-    { day: 'Lördag', time: '10:00 - 15:00' },
-    { day: 'Söndag', time: 'Stängt' },
-  ],
-  googleMapsUrl: 'https://maps.google.com/?q=Storgatan+12+Stockholm',
+  phone: '076-072 49 01',
+  email: 'info@ljusetsbarn.nu',
 }
 
 export const SOCIAL = {
   instagram: 'https://instagram.com/ljusetsbarn',
-  facebook: 'https://facebook.com/ljusetsbarn',
-  pinterest: 'https://pinterest.com/ljusetsbarn',
 }
 
 export const NAV_ITEMS = [

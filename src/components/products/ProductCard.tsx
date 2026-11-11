@@ -27,9 +27,9 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     >
       <Link
         to={`/produkter/${product.id}`}
-        className="group block bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg hover:border-amber-200 dark:hover:border-amber-800 transition-all duration-300"
+        className="group block bg-white  rounded-xl border border-gray-200  overflow-hidden hover:shadow-lg hover:border-amber-200  transition-all duration-300"
       >
-        <div className="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700">
+        <div className="relative aspect-square overflow-hidden bg-gray-100 ">
           <img
             src={product.image_url || '/placeholder.svg'}
             alt={product.name}
@@ -47,7 +47,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
               'absolute top-3 right-3 p-2 rounded-full backdrop-blur-sm transition-all',
               favorited
                 ? 'bg-amber-600 text-white'
-                : 'bg-white/80 dark:bg-gray-900/80 text-gray-600 dark:text-gray-400 hover:bg-amber-600 hover:text-white'
+                : 'bg-white/80  text-gray-600  hover:bg-amber-600 hover:text-white'
             )}
             aria-label={favorited ? 'Ta bort från favoriter' : 'Lägg till i favoriter'}
           >
@@ -65,13 +65,13 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           )}
         </div>
         <div className="p-4">
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+          <p className="text-xs text-gray-500  mb-1">
             {product.category?.name ?? 'Övrigt'}
           </p>
-          <h3 className="font-medium text-gray-900 dark:text-white text-sm line-clamp-1 group-hover:text-amber-600 transition-colors">
+          <h3 className="font-medium text-gray-900  text-sm line-clamp-1 group-hover:text-amber-600 transition-colors">
             {product.name}
           </h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-1">
+          <p className="text-xs text-gray-500  mt-1 line-clamp-1">
             {product.description}
           </p>
           <div className="flex items-center justify-between mt-3">

@@ -48,7 +48,7 @@ export function ProductDetailPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
       <Link
         to="/produkter"
-        className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 mb-6 transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-gray-600  hover:text-amber-600 mb-6 transition-colors"
       >
         <ChevronLeft className="w-4 h-4" /> Tillbaka till produkter
       </Link>
@@ -58,7 +58,7 @@ export function ProductDetailPage() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
         >
-          <div className="rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 mb-4">
+          <div className="rounded-xl overflow-hidden bg-gray-100  mb-4">
             <ImageZoom
               src={images[selectedImage] || '/placeholder.svg'}
               alt={product.name}
@@ -75,7 +75,7 @@ export function ProductDetailPage() {
                     'w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors',
                     i === selectedImage
                       ? 'border-amber-600'
-                      : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600'
+                      : 'border-transparent hover:border-gray-300 '
                   )}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
@@ -99,7 +99,7 @@ export function ProductDetailPage() {
                 {product.category.name}
               </Link>
             )}
-            <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mt-1">
+            <h1 className="text-3xl lg:text-4xl font-bold text-gray-900  mt-1">
               {product.name}
             </h1>
           </div>
@@ -115,7 +115,7 @@ export function ProductDetailPage() {
             {product.featured && <Badge variant="warning">Nyhet</Badge>}
           </div>
 
-          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+          <p className="text-gray-600  leading-relaxed">
             {product.description}
           </p>
 

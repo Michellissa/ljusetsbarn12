@@ -1,4 +1,7 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
+import { Button } from '../components/ui/Button'
 
 export function AboutPage() {
   return (
@@ -6,10 +9,14 @@ export function AboutPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        className="mb-8"
       >
-        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900  mb-2">
           Om oss
         </h1>
+        <p className="text-gray-600 ">
+          Handgjort hantverk och personliga gåvor.
+        </p>
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
@@ -19,8 +26,8 @@ export function AboutPage() {
           transition={{ delay: 0.1 }}
         >
           <img
-            src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
-            alt="Ljusets Barn butik"
+            src="/images/ljusetsbarn/image18.jpg"
+            alt="Broderad dophandduk"
             className="w-full h-[400px] object-cover rounded-xl"
           />
         </motion.div>
@@ -30,21 +37,21 @@ export function AboutPage() {
           transition={{ delay: 0.2 }}
           className="space-y-4"
         >
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-2xl font-bold text-gray-900 ">
             Vår historia
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-            Ljusets Barn startade med en enkel idé: att skapa en plats där människor kan hitta
-            produkter som sprider glädje och värme. Vår butik erbjuder ett noggrant utvalt sortiment
-            av presenter, inredning, smycken och dekorationer.
+          <p className="text-gray-600  leading-relaxed">
+            Ljusets Barn brinner för handarbete och personliga gåvor – särskilt
+            broderade dophanddukar och produkter i plexi.
           </p>
-          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-            Vi tror på kvalitet framför kvantitet. Varje produkt i vårt sortiment är handplockad
-            för att säkerställa att den uppfyller våra höga krav på design, hållbarhet och
-            funktionalitet.
+          <p className="text-gray-600  leading-relaxed">
+            Varje dophandduk broderas för hand efter namn och datum. Vi lägger tid på
+            detaljerna och vill att varje produkt ska kännas personlig och hålla
+            länge.
           </p>
-          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-            Välkommen till Ljusets Barn - där varje produkt har en historia att berätta.
+          <p className="text-gray-600  leading-relaxed">
+            Vi skickar inom hela Sverige och EU. Hör av dig online så hjälper vi
+            dig.
           </p>
         </motion.div>
       </div>
@@ -56,16 +63,18 @@ export function AboutPage() {
         className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
       >
         {[
-          { value: '500+', label: 'Produkter' },
-          { value: '6', label: 'Kategorier' },
-          { value: '100%', label: 'Kvalitet' },
+          { value: 'Handgjort', label: 'Hantverk' },
+          { value: 'Personlig', label: 'Brodyr' },
+          { value: 'SE & EU', label: 'Frakt' },
         ].map((stat, i) => (
           <div
             key={i}
-            className="text-center p-8 bg-gray-50 dark:bg-gray-800 rounded-xl"
+            className="text-center p-8 bg-gray-50  rounded-xl"
           >
-            <div className="text-4xl font-bold text-amber-600 mb-2">{stat.value}</div>
-            <div className="text-gray-600 dark:text-gray-400">{stat.label}</div>
+            <div className="text-4xl font-bold text-amber-600 mb-2">
+              {stat.value}
+            </div>
+            <div className="text-gray-600 ">{stat.label}</div>
           </div>
         ))}
       </motion.div>
@@ -77,16 +86,24 @@ export function AboutPage() {
         className="grid grid-cols-1 md:grid-cols-2 gap-6"
       >
         <img
-          src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80"
-          alt="Inredning"
+          src="/images/ljusetsbarn/image22.jpg"
+          alt="Handgjord plexi"
           className="w-full h-64 object-cover rounded-xl"
         />
         <img
-          src="https://images.unsplash.com/photo-1532372576444-dda954194ad0?w=800&q=80"
-          alt="Presenter"
+          src="/images/ljusetsbarn/image16.jpg"
+          alt="Handgjort smycke"
           className="w-full h-64 object-cover rounded-xl"
         />
       </motion.div>
+
+      <div className="mt-12 text-center">
+        <Link to="/produkter">
+          <Button size="lg">
+            Se våra produkter <ArrowRight className="w-4 h-4" />
+          </Button>
+        </Link>
+      </div>
     </div>
   )
 }

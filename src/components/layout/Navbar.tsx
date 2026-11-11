@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Heart, ShoppingCart, Moon, Sun, Search } from 'lucide-react'
+import { Menu, X, Heart, ShoppingCart, Search } from 'lucide-react'
 import { NAV_ITEMS, SITE_NAME } from '../../lib/constants'
-import { useTheme } from '../../contexts/ThemeContext'
 import { useFavorites } from '../../contexts/FavoritesContext'
 import { useCart } from '../../contexts/CartContext'
 import { cn } from '../../utils/cn'
@@ -14,7 +13,6 @@ export function Navbar() {
   const [showSearch, setShowSearch] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
-  const { isDark, toggle } = useTheme()
   const { favorites } = useFavorites()
   const { itemCount } = useCart()
 
@@ -34,7 +32,7 @@ export function Navbar() {
       className={cn(
         'fixed top-0 left-0 right-0 z-40 transition-all duration-300',
         scrolled
-          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-sm'
+          ? 'bg-white/95  backdrop-blur-md shadow-sm'
           : 'bg-transparent'
       )}
     >
@@ -42,7 +40,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           <Link to="/" className="flex items-center gap-3">
             <img src="/logo.png" alt="Ljusets Barn" className="h-10 w-10 object-contain" />
-            <span className="text-xl font-semibold text-gray-900 dark:text-white">{SITE_NAME}</span>
+            <span className="text-xl font-semibold text-gray-900 ">{SITE_NAME}</span>
           </Link>
 
           <div className="hidden lg:flex items-center gap-8">
@@ -54,7 +52,7 @@ export function Navbar() {
                   'text-sm font-medium transition-colors',
                   location.pathname === item.path
                     ? 'text-amber-600'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-500'
+                    : 'text-gray-700  hover:text-amber-600 '
                 )}
               >
                 {item.label}
@@ -65,23 +63,15 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowSearch(!showSearch)}
-              className="p-2 text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors"
+              className="p-2 text-gray-600  hover:text-amber-600 transition-colors"
               aria-label="Sök"
             >
               <Search className="w-5 h-5" />
             </button>
 
-            <button
-              onClick={toggle}
-              className="p-2 text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors"
-              aria-label={isDark ? 'Ljust läge' : 'Mörkt läge'}
-            >
-              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-
             <Link
               to="/varukorg"
-              className="relative p-2 text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors"
+              className="relative p-2 text-gray-600  hover:text-amber-600 transition-colors"
               aria-label="Varukorg"
             >
               <ShoppingCart className="w-5 h-5" />
@@ -94,7 +84,7 @@ export function Navbar() {
 
             <Link
               to="/favoriter"
-              className="relative p-2 text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors"
+              className="relative p-2 text-gray-600  hover:text-amber-600 transition-colors"
               aria-label="Favoriter"
             >
               <Heart className="w-5 h-5" />
@@ -107,7 +97,7 @@ export function Navbar() {
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 text-gray-600 dark:text-gray-400 hover:text-amber-600 transition-colors"
+              className="lg:hidden p-2 text-gray-600  hover:text-amber-600 transition-colors"
               aria-label="Meny"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -122,7 +112,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
+            className="border-t border-gray-200  bg-white "
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
               <SearchBar onClose={() => setShowSearch(false)} />
@@ -137,7 +127,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden"
+            className="lg:hidden border-t border-gray-200  bg-white  overflow-hidden"
           >
             <div className="px-4 py-4 space-y-2">
               {NAV_ITEMS.map((item) => (
@@ -147,8 +137,8 @@ export function Navbar() {
                   className={cn(
                     'block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors',
                     location.pathname === item.path
-                      ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-600'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                      ? 'bg-amber-50  text-amber-600'
+                      : 'text-gray-700  hover:bg-gray-50 '
                   )}
                 >
                   {item.label}

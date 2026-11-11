@@ -1,4 +1,4 @@
-import { SITE_NAME, SITE_URL } from '../lib/constants'
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from '../lib/constants'
 
 interface SEOProps {
   title?: string
@@ -10,8 +10,9 @@ interface SEOProps {
 
 export function generateMetaTags({ title, description, image, url, type = 'website' }: SEOProps = {}) {
   const siteTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME
-  const desc = description ?? 'Presenter, inredning och produkter som sprider glädje.'
-  const img = image ?? '/og-image.jpg'
+  const desc = description ?? SITE_DESCRIPTION
+  const img = image ?? '/images/ljusetsbarn/image18.jpg'
+  const absoluteImg = img.startsWith('http') ? img : `${SITE_URL}${img}`
   const pageUrl = url ?? SITE_URL
 
   return {
@@ -20,13 +21,13 @@ export function generateMetaTags({ title, description, image, url, type = 'websi
       { name: 'description', content: desc },
       { property: 'og:title', content: siteTitle },
       { property: 'og:description', content: desc },
-      { property: 'og:image', content: img },
+      { property: 'og:image', content: absoluteImg },
       { property: 'og:url', content: pageUrl },
       { property: 'og:type', content: type },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: siteTitle },
       { name: 'twitter:description', content: desc },
-      { name: 'twitter:image', content: img },
+      { name: 'twitter:image', content: absoluteImg },
     ],
   }
 }
@@ -40,7 +41,7 @@ export function generateStructuredData(type: 'Store' | 'Product' | 'BreadcrumbLi
         ...base,
         '@type': 'Store',
         name: SITE_NAME,
-        description: 'Presenter, inredning och produkter som sprider glädje.',
+        description: SITE_DESCRIPTION,
         url: SITE_URL,
         ...data,
       }

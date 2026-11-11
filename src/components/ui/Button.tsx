@@ -23,13 +23,13 @@ export function Button({
   onClick,
   type = 'button',
 }: ButtonProps) {
-  const base = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900'
+  const base = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 '
 
   const variants = {
     primary: 'bg-amber-600 text-white hover:bg-amber-700 shadow-sm',
-    secondary: 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700',
-    outline: 'border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800',
-    ghost: 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800',
+    secondary: 'bg-gray-100  text-gray-900  hover:bg-gray-200 ',
+    outline: 'border border-gray-300  text-gray-700  hover:bg-gray-50 ',
+    ghost: 'text-gray-700  hover:bg-gray-100 ',
   }
 
   const sizes = {

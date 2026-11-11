@@ -28,12 +28,12 @@ export function AdminMessagesPage() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Meddelanden</h2>
+      <h2 className="text-2xl font-bold text-gray-900  mb-6">Meddelanden</h2>
 
       {isLoading ? (
         <div className="space-y-3">
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="h-24 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
+            <div key={i} className="h-24 bg-gray-100  rounded-lg animate-pulse" />
           ))}
         </div>
       ) : messages && messages.length > 0 ? (
@@ -43,16 +43,16 @@ export function AdminMessagesPage() {
               key={msg.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+              className="bg-white  rounded-xl border border-gray-200  overflow-hidden"
             >
               <button
                 onClick={() => setExpanded(expanded === msg.id ? null : msg.id)}
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50  transition-colors"
               >
                 <div className="flex-1 min-w-0 mr-4">
                   <div className="flex items-center gap-3 mb-1">
                     <Mail className="w-4 h-4 text-amber-600 flex-shrink-0" />
-                    <span className="font-medium text-gray-900 dark:text-white truncate">
+                    <span className="font-medium text-gray-900  truncate">
                       {msg.subject}
                     </span>
                   </div>
@@ -82,8 +82,8 @@ export function AdminMessagesPage() {
                 </div>
               </button>
               {expanded === msg.id && (
-                <div className="px-4 pb-4 pt-0 border-t border-gray-200 dark:border-gray-700">
-                  <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap mt-3">
+                <div className="px-4 pb-4 pt-0 border-t border-gray-200 ">
+                  <p className="text-sm text-gray-700  whitespace-pre-wrap mt-3">
                     {msg.message}
                   </p>
                 </div>
@@ -93,7 +93,7 @@ export function AdminMessagesPage() {
         </div>
       ) : (
         <div className="text-center py-16 text-gray-500">
-          <Mail className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
+          <Mail className="w-12 h-12 mx-auto mb-3 text-gray-300 " />
           <p>Inga meddelanden än</p>
         </div>
       )}

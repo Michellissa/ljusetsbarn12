@@ -18,12 +18,12 @@ export function ErrorPage({ title = 'Något gick fel', message = 'Ett oväntat f
         className="text-center max-w-md"
       >
         <AlertTriangle className="w-16 h-16 text-amber-500 mx-auto mb-6" />
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{title}</h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-8">{message}</p>
+        <h1 className="text-2xl font-bold text-gray-900  mb-3">{title}</h1>
+        <p className="text-gray-600  mb-8">{message}</p>
         <div className="flex gap-4 justify-center">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 border border-gray-300  rounded-lg text-gray-700  hover:bg-gray-50  transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Gå tillbaka
           </button>
@@ -50,8 +50,8 @@ export function NotFoundPage() {
         className="text-center max-w-md"
       >
         <h1 className="text-8xl font-bold text-amber-600 mb-4">404</h1>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Sidan hittades inte</h2>
-        <p className="text-gray-600 dark:text-gray-400 mb-8">
+        <h2 className="text-2xl font-bold text-gray-900  mb-3">Sidan hittades inte</h2>
+        <p className="text-gray-600  mb-8">
           Sidan du letar efter finns inte eller har flyttats.
         </p>
         <button

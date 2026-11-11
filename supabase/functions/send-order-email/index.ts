@@ -71,9 +71,9 @@ Deno.serve(async (req) => {
       return json({ skipped: 'RESEND_API_KEY saknas' })
     }
 
-    const from = Deno.env.get('RESEND_FROM') ?? 'Ljusets Barn <no-reply@ljusetsbarn.se>'
+    const from = Deno.env.get('RESEND_FROM') ?? 'Ljusets Barn <onboarding@resend.dev>'
     const adminEmail = Deno.env.get('ADMIN_EMAIL')
-    const siteUrl = Deno.env.get('SITE_URL') ?? 'https://ljusetsbarn.se'
+    const siteUrl = Deno.env.get('SITE_URL') ?? 'https://ljusetsbarn12.vercel.app'
     const orderUrl = `${siteUrl}/orderbekraftelse/${order.access_token}`
 
     const items = (order.items ?? []) as Array<{

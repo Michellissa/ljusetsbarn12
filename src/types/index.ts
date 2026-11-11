@@ -91,12 +91,12 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
 }
 
 export const ORDER_STATUS_COLORS: Record<OrderStatus, string> = {
-  ny: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-  vantar_betalning: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
-  betald: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-  packas: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
-  skickad: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400',
-  klar: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+  ny: 'bg-blue-100 text-blue-700  ',
+  vantar_betalning: 'bg-amber-100 text-amber-700  ',
+  betald: 'bg-green-100 text-green-700  ',
+  packas: 'bg-purple-100 text-purple-700  ',
+  skickad: 'bg-cyan-100 text-cyan-700  ',
+  klar: 'bg-gray-100 text-gray-700  ',
 }
 
 export interface PaymentService {

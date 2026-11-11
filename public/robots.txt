@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ljusetsbarn.se/sitemap.xml
+Sitemap: https://ljusetsbarn12.vercel.app/sitemap.xml

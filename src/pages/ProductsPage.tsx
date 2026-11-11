@@ -44,10 +44,10 @@ export function ProductsPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900  mb-2">
           {search ? `Sökresultat för "${search}"` : 'Produkter'}
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-8">
+        <p className="text-gray-600  mb-8">
           {data?.count ?? 0} produkter
           {search && ` hittades för "${search}"`}
         </p>
@@ -60,7 +60,7 @@ export function ProductsPage() {
           className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
             !activeCategory
               ? 'bg-amber-600 text-white'
-              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+              : 'bg-gray-100  text-gray-700  hover:bg-gray-200 '
           }`}
         >
           Alla
@@ -72,7 +72,7 @@ export function ProductsPage() {
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
               activeCategory === cat.slug
                 ? 'bg-amber-600 text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                : 'bg-gray-100  text-gray-700  hover:bg-gray-200 '
             }`}
           >
             {cat.name}
@@ -120,7 +120,7 @@ export function ProductsPage() {
         </>
       ) : (
         <div className="text-center py-16">
-          <p className="text-gray-500 dark:text-gray-400 text-lg">Inga produkter hittades.</p>
+          <p className="text-gray-500  text-lg">Inga produkter hittades.</p>
         </div>
       )}
     </div>

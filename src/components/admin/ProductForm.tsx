@@ -57,21 +57,21 @@ export function ProductForm({ product, categories, onSave, onCancel, saving }: P
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="bg-white  rounded-xl border border-gray-200  p-6 space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Namn</label>
+          <label className="block text-sm font-medium text-gray-700  mb-1">Namn</label>
           <input
             {...register('name')}
-            className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full px-4 py-2.5 border border-gray-300  rounded-lg bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
           {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kategori</label>
+          <label className="block text-sm font-medium text-gray-700  mb-1">Kategori</label>
           <select
             {...register('category_id')}
-            className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full px-4 py-2.5 border border-gray-300  rounded-lg bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-amber-500"
           >
             <option value="">Välj kategori</option>
             {categories.map((cat) => (
@@ -81,42 +81,42 @@ export function ProductForm({ product, categories, onSave, onCancel, saving }: P
           {errors.category_id && <p className="text-sm text-red-600 mt-1">{errors.category_id.message}</p>}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pris (kr)</label>
+          <label className="block text-sm font-medium text-gray-700  mb-1">Pris (kr)</label>
           <input
             type="number"
             {...register('price')}
-            className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full px-4 py-2.5 border border-gray-300  rounded-lg bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
           {errors.price && <p className="text-sm text-red-600 mt-1">{errors.price.message}</p>}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Lagersaldo</label>
+          <label className="block text-sm font-medium text-gray-700  mb-1">Lagersaldo</label>
           <input
             type="number"
             {...register('stock')}
-            className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full px-4 py-2.5 border border-gray-300  rounded-lg bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
           {errors.stock && <p className="text-sm text-red-600 mt-1">{errors.stock.message}</p>}
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Beskrivning</label>
+        <label className="block text-sm font-medium text-gray-700  mb-1">Beskrivning</label>
         <textarea
           rows={4}
           {...register('description')}
-          className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+          className="w-full px-4 py-2.5 border border-gray-300  rounded-lg bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
         />
         {errors.description && <p className="text-sm text-red-600 mt-1">{errors.description.message}</p>}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Bild</label>
+        <label className="block text-sm font-medium text-gray-700  mb-1">Bild</label>
         <input
           type="file"
           accept="image/*"
           onChange={(e) => setImageFile(e.target.files?.[0])}
-          className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 dark:file:bg-amber-900/20 file:text-amber-600 hover:file:bg-amber-100"
+          className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50  file:text-amber-600 hover:file:bg-amber-100"
         />
         {product?.image_url && !imageFile && (
           <img src={product.image_url} alt="" className="w-20 h-20 rounded-lg object-cover mt-2" />
@@ -129,7 +129,7 @@ export function ProductForm({ product, categories, onSave, onCancel, saving }: P
           {...register('featured')}
           className="w-4 h-4 rounded border-gray-300 text-amber-600 focus:ring-amber-500"
         />
-        <span className="text-sm text-gray-700 dark:text-gray-300">Nyhet / Utvald produkt</span>
+        <span className="text-sm text-gray-700 ">Nyhet / Utvald produkt</span>
       </label>
 
       <div className="flex gap-3 justify-end pt-2">

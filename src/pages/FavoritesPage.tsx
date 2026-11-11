@@ -22,11 +22,11 @@ export function FavoritesPage() {
       >
         <div className="flex items-center gap-3 mb-2">
           <Heart className="w-6 h-6 text-amber-600" />
-          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 ">
             Favoriter
           </h1>
         </div>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600 ">
           {favoriteProducts.length} sparade produkter
         </p>
       </motion.div>
@@ -41,11 +41,11 @@ export function FavoritesPage() {
         </div>
       ) : (
         <div className="text-center py-16">
-          <Heart className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          <Heart className="w-16 h-16 text-gray-300  mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-gray-900  mb-2">
             Inga favoriter än
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 mb-6">
+          <p className="text-gray-500  mb-6">
             Spara produkter du gillar genom att klicka på hjärtat.
           </p>
           <Link to="/produkter">

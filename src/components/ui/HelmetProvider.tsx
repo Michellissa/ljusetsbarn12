@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { SITE_NAME, SITE_DESCRIPTION } from '../../lib/constants'
 
 export function HelmetProvider() {
   useEffect(() => {
@@ -16,7 +17,7 @@ export function HelmetProvider() {
 }
 
 export function useSEO(title?: string, description?: string) {
-  const siteTitle = 'Ljusets Barn'
+  const siteTitle = SITE_NAME
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle
 
   useEffect(() => {
@@ -36,12 +37,12 @@ export function useSEO(title?: string, description?: string) {
       el.setAttribute('content', content)
     }
 
-    setMeta('description', description ?? 'Presenter, inredning och produkter som sprider glädje.')
+    setMeta('description', description ?? SITE_DESCRIPTION)
     setMeta('og:title', fullTitle)
-    setMeta('og:description', description ?? 'Presenter, inredning och produkter som sprider glädje.')
+    setMeta('og:description', description ?? SITE_DESCRIPTION)
     setMeta('og:type', 'website')
     setMeta('twitter:card', 'summary_large_image')
     setMeta('twitter:title', fullTitle)
-    setMeta('twitter:description', description ?? 'Presenter, inredning och produkter som sprider glädje.')
+    setMeta('twitter:description', description ?? SITE_DESCRIPTION)
   }, [fullTitle, description])
 }

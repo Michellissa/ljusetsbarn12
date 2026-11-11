@@ -91,7 +91,7 @@ export function AdminProductsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Produkter</h2>
+        <h2 className="text-2xl font-bold text-gray-900 ">Produkter</h2>
         <Button onClick={() => { setEditing(null); setFormOpen(true) }}>
           <Plus className="w-4 h-4" /> Lägg till produkt
         </Button>
@@ -112,14 +112,14 @@ export function AdminProductsPage() {
       {isLoading ? (
         <div className="space-y-3">
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="h-16 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
+            <div key={i} className="h-16 bg-gray-100  rounded-lg animate-pulse" />
           ))}
         </div>
       ) : products && products.length > 0 ? (
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="bg-white  rounded-xl border border-gray-200  overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
+              <tr className="border-b border-gray-200 ">
                 <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Produkt</th>
                 <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase hidden md:table-cell">Kategori</th>
                 <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase">Pris</th>
@@ -127,29 +127,29 @@ export function AdminProductsPage() {
                 <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase">Åtgärder</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody className="divide-y divide-gray-200 ">
               {products.map((product) => (
                 <motion.tr
                   key={product.id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                  className="hover:bg-gray-50  transition-colors"
                 >
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <img src={product.image_url || '/placeholder.svg'} alt={product.name} className="w-10 h-10 rounded-lg object-cover" 
 onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.svg' }} />
                       <div>
-                        <p className="text-sm font-medium text-gray-900 dark:text-white">{product.name}</p>
+                        <p className="text-sm font-medium text-gray-900 ">{product.name}</p>
                         <p className="text-xs text-gray-500">{product.description.slice(0, 50)}...</p>
                       </div>
                     </div>
                   </td>
                   <td className="px-4 py-3 hidden md:table-cell">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">{product.category?.name ?? '-'}</span>
+                    <span className="text-sm text-gray-600 ">{product.category?.name ?? '-'}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">{product.price} kr</span>
+                    <span className="text-sm font-medium text-gray-900 ">{product.price} kr</span>
                   </td>
                   <td className="px-4 py-3 text-right">
                     {product.stock > 5 ? (

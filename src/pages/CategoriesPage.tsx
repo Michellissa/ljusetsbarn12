@@ -4,17 +4,7 @@ import { ArrowRight, Tags } from 'lucide-react'
 import { useCategories } from '../hooks/useCategories'
 import { Skeleton } from '../components/ui/LoadingSkeleton'
 import { ErrorPage } from '../components/ui/ErrorPage'
-
-const categoryImages: Record<string, string> = {
-  smycken: '/images/ljusetsbarn/image6.jpg',
-  presenter: '/images/ljusetsbarn/image12.jpg',
-  inredning: '/images/ljusetsbarn/image22.jpg',
-  dekoration: '/images/ljusetsbarn/image10.jpg',
-  ljus: '/images/ljusetsbarn/image9.jpg',
-  dophanddukar: '/images/ljusetsbarn/image18.jpg',
-  plexi: '/images/ljusetsbarn/image1.jpg',
-  hantverk: '/images/ljusetsbarn/image25.jpg',
-}
+import { categoryImages } from '../lib/categoryImages'
 
 export function CategoriesPage() {
   const { data: categories, isLoading, error } = useCategories()
@@ -30,11 +20,11 @@ export function CategoriesPage() {
       >
         <div className="flex items-center gap-3 mb-2">
           <Tags className="w-6 h-6 text-amber-600" />
-          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 ">
             Kategorier
           </h1>
         </div>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600 ">
           Utforska våra produktkategorier
         </p>
       </motion.div>
@@ -59,7 +49,7 @@ export function CategoriesPage() {
                 className="group relative block aspect-[4/3] rounded-xl overflow-hidden"
               >
                 <img
-                  src={categoryImages[cat.slug] ?? 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80'}
+                  src={categoryImages[cat.slug] ?? '/placeholder.svg'}
                   alt={cat.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -76,7 +66,7 @@ export function CategoriesPage() {
         </div>
       ) : (
         <div className="text-center py-16">
-          <p className="text-gray-500 dark:text-gray-400 text-lg">Inga kategorier hittades.</p>
+          <p className="text-gray-500  text-lg">Inga kategorier hittades.</p>
         </div>
       )}
     </div>

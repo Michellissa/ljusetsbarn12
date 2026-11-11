@@ -80,29 +80,29 @@ export function AdminCategoriesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Kategorier</h2>
+        <h2 className="text-2xl font-bold text-gray-900 ">Kategorier</h2>
         <Button onClick={() => { setEditing(null); setFormOpen(true); setName(''); setSlug('') }}>
           <Plus className="w-4 h-4" /> Lägg till kategori
         </Button>
       </div>
 
       {formOpen && (
-        <div className="mb-8 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+        <div className="mb-8 bg-white  rounded-xl border border-gray-200  p-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Namn</label>
+              <label className="block text-sm font-medium text-gray-700  mb-1">Namn</label>
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-2.5 border border-gray-300  rounded-lg bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug</label>
+              <label className="block text-sm font-medium text-gray-700  mb-1">Slug</label>
               <input
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-2.5 border border-gray-300  rounded-lg bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </div>
           </div>
@@ -118,7 +118,7 @@ export function AdminCategoriesPage() {
       {isLoading ? (
         <div className="space-y-3">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-16 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
+            <div key={i} className="h-16 bg-gray-100  rounded-lg animate-pulse" />
           ))}
         </div>
       ) : categories && categories.length > 0 ? (
@@ -128,10 +128,10 @@ export function AdminCategoriesPage() {
               key={cat.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700"
+              className="flex items-center justify-between p-4 bg-white  rounded-xl border border-gray-200 "
             >
               <div>
-                <p className="font-medium text-gray-900 dark:text-white">{cat.name}</p>
+                <p className="font-medium text-gray-900 ">{cat.name}</p>
                 <p className="text-sm text-gray-500">/{cat.slug}</p>
               </div>
               <div className="flex items-center gap-2">
